@@ -3,7 +3,6 @@ import os
 import re
 import tkinter as tk
 import time
-from PIL import ImageTk, Image
 
 # Note: the following sequence shows up throughout the code:
 #       tk_widget.config(text="updated")
@@ -28,23 +27,23 @@ cell_entry_width = 5
 # Default entry values
 sn_start_default = 33700
 sn_end_default = 33726
-search_dir_default = "T:\\Machines"
-output_dir_default = "T:\\Sustaining\\Projects\\Monocle Lens Check Calibration Limits"
+search_dir_default = "C:\\Machines"
+output_dir_default = "C:\\Desktop"
 sheet_name_default = "Summary"
-keyword_default = "light"
+keyword_default = "cal"
 
 cell_entry_list = []
-default_lens_test_cell_list = ['A34', 'B4', 'E2', 'E3', 'B20', 'B21', 'B22', 'B23',
+default_cal_test_cell_list = ['A34', 'B4', 'E2', 'E3', 'B20', 'B21', 'B22', 'B23',
                                'C20', 'C21', 'C22', 'C23', 'F20', 'G20', 'H20', 'I20']
 # default_light_cal_cell_list = ['D13', 'K14', 'M14', 'Q14', 'K17']
-cell_entry_count = len(default_lens_test_cell_list)
+cell_entry_count = len(default_cal_test_cell_list)
 # cell_entry_count = len(default_light_cal_cell_list)
 
 # RegEx for validating user input in the cell entry widgets. The '^' symbol signifies the start of the match pattern,
 # the '$' sign signifies the end of the match pattern.
 valid_cell_regex = re.compile('^[a-zA-Z]\d+$')
 # RegEx for validating serial number input. Serial number must be a five-digit number only
-valid_sn_regex = re.compile('^[0-9][0-9][0-9][0-9][0-9]$')
+valid_sn_regex = re.compile('^[0-9][0-9][0-9][0-9]$')
 
 
 # function that converts uppercase letters to a column number
@@ -88,6 +87,7 @@ def begin_search():
     cell_list = get_cell_list()
     start_time = time.perf_counter()
     # This for loop steps through the specified directory in sequential order by serial number
+    # noinspection PyInterpreter
     for current_mach_sn in range(first_mach_sn, last_mach_sn + 1):
         # Generate a list of directories and files in the sub-folder using os.listdir()  and
         # filter out all non-directory objects in dir_list using a list comprehension with a conditional calling
@@ -183,7 +183,7 @@ cell_selection_frame = tk.Frame(main_frame, bg=label_color_str)
 for i in range(cell_entry_count):
     cell_entry_list.append(
         tk.Entry(cell_selection_frame, width=cell_entry_width, fg=text_color_str))
-    cell_entry_list[i].insert(0, default_lens_test_cell_list[i])
+    cell_entry_list[i].insert(0, default_cal_test_cell_list[i])
 """check_cells_btn = tk.Button(cell_selection_frame, bg=label_color_str, text='Check Cells', anchor='w')
 check_cells_btn.grid(row=1, column=0, sticky='w', padx=global_padding_x, pady=global_padding_y)"""
 
